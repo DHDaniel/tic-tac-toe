@@ -44,6 +44,7 @@ var diagonals = getDiagonals(matrix);
 // containing coordinates to matrix
 var colCoords = getColumns(coords);
 var diagCoords = getDiagonals(coords);
+var cornerCoords = [[0, 0], [0, 2], [2, 0], [2, 2]];
 
 
 /*=========================================
@@ -94,7 +95,6 @@ COMPUTER AI
 // puts the AI's decision on the board
 function play(coordinate) {
   matrix[coordinate[0]][coordinate[1]] = 0;
-  played = true; // flag inside the makeNextMove() function
 }
 
 // counts the number of certain elements in an array
@@ -150,28 +150,81 @@ function rowToCounter(row) {
 function counter() {
 	var countered = false;
   forEachRow(function (row, coords, idxOfRow) {
+    // if row needs countering and a play hasn't been made
     if (rowToCounter(row) && countered === false) {
       var idx = row.indexOf(null); // get empty space coordinate
       var coord = coords[idxOfRow][idx];
 
       play(coord);
-      countered = true; // setting flag that one has already been countered
+      countered = true; // setting flag since function may execute more times
     }
   });
+
+  return countered; // returns true if executed
 }
 
 function win() {
   var won = false;
   forEachRow(function (row, coords, idxOfRow) {
-    if (row.)
-  })
+    if (count(row, 0) == 2 && won === false && row.indexOf(null) > -1) {
+      var idx = row.indexOf(null);
+      var coord = [idxOfRow, idx];
+
+      play(coord);
+      won = true;
+    }
+  });
+
+  return won; // returns won if executed
+}
+
+function playCenter() {
+  // if center is not taken, then take the center
+  if (matrix[1][1] === null) {
+    play([1, 1]);
+    return true;
+  }
+  return false;
+}
+
+function playCorners() {
+  // looking to see if any of the corners are available, and taking them.
+  for (var i = 0; i < cornerCoords.length; i++) {
+    var c = cornerCoords[i];
+    if (matrix[c[0], c[1]] === null) {
+      play(c);
+      return true;
+    }
+  }
+  return false;
+}
+
+// plays on any empty spot
+function playEmpty() {
+  for (var i = 0; i < matrix.length; i++) {
+    for (var j = 0; j < matrix[i].length; j++) {
+      if (matrix[i][j] === null) {
+        play([i, j]);
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function makeNextMove() {
-  var played = false;
 
+  var moves = [win, counter, playCenter, playCorner, playEmpty]; // list of moves in order that they are to be tried
 
-  // countering any move that is about to win
-  ifNotPlayed(played, counter);
+  var notMoved = true;
+  for (var i = 0; i < moves.length; i++) {
+    if (notMoved) {
+    // executing next move in cue
+    // returns true if move was executed
+      var moved = moves[i]();
+    }
 
+    // setting notMoved to the opposite of returned "executed" value. If executed is true, then notMoved is now false.
+    notMoved = !moved;
+  }
 }
