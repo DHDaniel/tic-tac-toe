@@ -1,0 +1,18 @@
+/* line 3, ../sass/styles.scss */
+#tic-tac-toe-table {
+  margin: auto;
+  display: block;
+  border: none;
+}
+/* line 8, ../sass/styles.scss */
+#tic-tac-toe-table tr {
+  border: 1px solid black;
+  margin: none;
+}
+/* line 11, ../sass/styles.scss */
+#tic-tac-toe-table tr td {
+  height: 60px;
+  width: 60px;
+  border: 1px solid blue;
+  border-top: none;
+}
