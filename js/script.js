@@ -2,24 +2,9 @@
 var $ticBoard = $("#tic-tac-toe-table");
 
 var matrix = getMatrixValues();
+var computerAI = new TicTacToeAI(matrix);
+
 var playerTurn = true;
-
-// getting an identical array with the coordinates of each point - useful for when telling AI how/where to play
-var coords = [[], [], []];
-for (var i = 0; i < matrix.length; i++) {
-  for (var j = 0; j < matrix[i].length; j++) {
-    coords[i].push([i, j]); // column, row
-  }
-}
-
-// very useful variables - containing actual numbers for AI
-var columns = getColumns(matrix);
-var diagonals = getDiagonals(matrix);
-
-// containing coordinates to matrix
-var colCoords = getColumns(coords);
-var diagCoords = getDiagonals(coords);
-var cornerCoords = [[0, 0], [0, 2], [2, 0], [2, 2]];
 
 // Determines the styling to use for each box in tic tac toe board
 function addStyling($box, value) {
@@ -91,20 +76,56 @@ function getBoxCoordinate($box, matrix) {
 }
 
 
+  // checks if all elements in an array are the same
+  function checkRow(row) {
+    var first = row[0];
+    for (var i = 1; i < row.length; i++) {
+      if (row[i] !== first) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+// checks if there are any wins in the tic tac toe matrix
+function checkForWins(matrix) {
+  // checking rows
+  for (var i = 0; i < matrix.length; i++) {
+     if (checkRow(matrix[i])) {
+        return true;
+     }
+   }
+   // columns
+  for (var i = 0; i < columns.length; i++) {
+    if (checkRow(columns[i])) {
+      return true;
+    }
+  }
+  // diagonals
+  for (var i = 0; i < diagonals.length; i++) {
+    if (checkRow(diagonals[i])) {
+      return true;
+    }
+  }
+  return false; // if no wins
+}
+
+
 $("#tic-tac-toe-table td").click(function () {
   var isEmpty = Boolean($(this).data("val") === null);
   console.log(isEmpty);
 
-  if (isEmpty) {
+  if (isEmpty && playerTurn) {
+
       var coord = getBoxCoordinate($(this), matrix);
       matrix[coord[0]][coord[1]] = 1; // making the move
+
       setMatrixValues(matrix); // updating matrix
 
-      // getting columns and diagonals again for AI
-      columns = getColumns(matrix);
-      diagonals = getDiagonals(matrix);
+      computerAI.update(matrix);
+      computerAI.makeNextMove();
+      matrix = computerAI.getMatrix();
 
-      makeNextMove(matrix); // AI move
       setMatrixValues(matrix); // updating matrix
   }
 });
