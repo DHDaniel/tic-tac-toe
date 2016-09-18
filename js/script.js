@@ -3,26 +3,33 @@ var $ticBoard = $("#tic-tac-toe-table");
 
 var matrix = getMatrixValues();
 
+var playerTurn = true;
+var xStyle = "red";
+var oStyle = "blue";
+
+var $playerCounter = $("#results #player .count");
+var $computerCounter = $("#results #computer .count");
+var $tieCounter = $("#results #ties .count");
+
+var playerStyle = xStyle;
+var computerStyle = oStyle;
+
 // initializing AI and getting all rows from its helper
 var computerAI = new TicTacToeAI(matrix);
 
 var allRows = computerAI.getAllRows();
 
-console.log(allRows);
-
-var playerTurn = true;
-
 // Determines the styling to use for each box in tic tac toe board
 function addStyling($box, value) {
   switch (value) {
     case null:
-      $box.css("background-color", "white");
+      $box.css("background-color", "transparent");
       break;
     case 0:
-      $box.css("background-color", "blue");
+      $box.css("background-color", computerStyle);
       break;
     case 1:
-      $box.css("background-color", "red");
+      $box.css("background-color", playerStyle);
       break;
   }
 }
@@ -133,6 +140,45 @@ function checkForWins(rows) {
   return false; // if no wins
 }
 
+function resolveGame(outcome) {
+  switch (outcome) {
+    case 1:
+      alert("Player wins!");
+      $playerCounter.html( parseInt($playerCounter.html()) + 1);
+      resetGame();
+      return true;
+    case 0:
+      alert("Computer wins!");
+      $computerCounter.html( parseInt($computerCounter.html()) + 1);
+      resetGame();
+      return true;
+    case true:
+      alert("Tie game");
+      $tieCounter.html( parseInt($tieCounter.html()) + 1);
+      resetGame();
+      console.log("reset");
+      return true;;
+  }
+
+  return false;
+}
+
+
+// for choosing which item you want to be
+$("#x").click(function () {
+  playerStyle = xStyle;
+  computerStyle = oStyle;
+  resetGame();
+  playerTurn = true;
+});
+
+$("#o").click(function () {
+  playerStyle = oStyle;
+  computerStyle = xStyle;
+  resetGame();
+  playerTurn = true;
+});
+
 
 $("#tic-tac-toe-table td").click(function () {
   var isEmpty = Boolean($(this).data("val") === null);
@@ -143,10 +189,17 @@ $("#tic-tac-toe-table td").click(function () {
       matrix[coord[0]][coord[1]] = 1; // making the move
 
       setMatrixValues(matrix); // updating matrix
+
       playerTurn = false;
 
       // waiting .5 seconds for computer to make its move
       setTimeout(function () {
+
+        // checking if player won
+        computerAI.update(matrix);
+        var allRows = computerAI.getAllRows();
+        var outcome = checkForWins(allRows);
+        resolveGame(outcome);
 
         computerAI.update(matrix);
         computerAI.makeNextMove();
@@ -159,22 +212,7 @@ $("#tic-tac-toe-table td").click(function () {
 
         setTimeout(function () {
           var outcome = checkForWins(allRows);
-
-          switch (outcome) {
-            case 1:
-              alert("Player wins!");
-              resetGame();
-              break;
-            case 0:
-              alert("Computer wins!");
-              resetGame();
-              break;
-            case true:
-              alert("Tie game");
-              resetGame();
-              break;
-          }
-
+          resolveGame(outcome);
         }, 100);
 
         playerTurn = true;

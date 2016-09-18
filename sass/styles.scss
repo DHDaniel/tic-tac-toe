@@ -1,18 +1,78 @@
 
+$backgroundColor : #333;
+
+body, html {
+  width: 100%;
+  background-color: $backgroundColor;
+}
 
 #tic-tac-toe-table {
-  margin: auto;
-  display: block;
+  margin: 0 auto;
   border: none;
 
-  tr {
-    border: 1px solid black;
-    margin: none;
+  td {
+    height: 60px;
+    width: 60px;
+    border: 1px solid white;
+  }
+
+  // left cells
+  td:first-child {
+    border-left: none;
+  }
+
+  // right cells
+  td:last-child {
+    border-right: none;
+  }
+
+  tr:first-of-type {
     td {
-      height: 60px;
-      width: 60px;
-      border: 1px solid blue;
       border-top: none;
     }
+  }
+
+  tr:last-of-type {
+    td {
+      border-bottom: none;
+    }
+  }
+}
+
+#choose {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+
+  padding: 80px 0px 20px 0px;
+
+  button {
+    background: transparent;
+    font-size: 20px;
+    border: none;
+
+    color: white;
+    padding: 20px;
+
+    &:hover {
+      border: 1px solid white;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+#results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px;
+
+  p {
+    display: inline-block;
+    color: white;
+    margin: 0px 50px;
   }
 }
