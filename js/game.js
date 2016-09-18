@@ -151,7 +151,11 @@ function TicTacToeAI(board) {
     // looking to see if any of the corners are available, and taking them.
     for (var i = 0; i < self.cornerCoords.length; i++) {
       var c = self.cornerCoords[i];
-      if (self.matrix[c[0]][c[1]] === null) {
+      // getting the opposing corner for strategy
+      // got this random strategy from the web - always play the opposing corner of your rival
+      var oppC = self.cornerCoords[self.cornerCoords.length - [i + 1]];
+
+      if (self.matrix[c[0]][c[1]] === null && self.matrix[oppC[0]][oppC[1]] === 1) {
         play(c, self.matrix);
         return true;
       }
