@@ -2,7 +2,13 @@
 var $ticBoard = $("#tic-tac-toe-table");
 
 var matrix = getMatrixValues();
+
+// initializing AI and getting all rows from its helper
 var computerAI = new TicTacToeAI(matrix);
+
+var allRows = computerAI.getAllRows();
+
+console.log(allRows);
 
 var playerTurn = true;
 
@@ -80,7 +86,7 @@ function getBoxCoordinate($box, matrix) {
   function checkRow(row) {
     var first = row[0];
     for (var i = 1; i < row.length; i++) {
-      if (row[i] !== first) {
+      if (row[i] !== first || row[i] === null) {
         return false;
       }
     }
@@ -88,24 +94,36 @@ function getBoxCoordinate($box, matrix) {
   }
 
 // checks if there are any wins in the tic tac toe matrix
-function checkForWins(matrix) {
+function checkForWins(rows) {
   // checking rows
-  for (var i = 0; i < matrix.length; i++) {
-     if (checkRow(matrix[i])) {
+  var allFull = true;
+  for (var i = 0; i < rows.rows.length; i++) {
+     if (checkRow(rows.rows[i])) {
+        alert('win');
         return true;
+     }
+
+     if (rows.rows[i].indexOf(null) > -1) {
+       allFull = false;
      }
    }
    // columns
-  for (var i = 0; i < columns.length; i++) {
-    if (checkRow(columns[i])) {
+  for (var i = 0; i < rows.columns.length; i++) {
+    if (checkRow(rows.columns[i])) {
+      alert('win');
       return true;
     }
   }
   // diagonals
-  for (var i = 0; i < diagonals.length; i++) {
-    if (checkRow(diagonals[i])) {
+  for (var i = 0; i < rows.diagonals.length; i++) {
+    if (checkRow(rows.diagonals[i])) {
+      alert('win');
       return true;
     }
+  }
+
+  if (allFull) {
+    alert("Tie game");
   }
   return false; // if no wins
 }
@@ -113,7 +131,6 @@ function checkForWins(matrix) {
 
 $("#tic-tac-toe-table td").click(function () {
   var isEmpty = Boolean($(this).data("val") === null);
-  console.log(isEmpty);
 
   if (isEmpty && playerTurn) {
 
@@ -121,11 +138,27 @@ $("#tic-tac-toe-table td").click(function () {
       matrix[coord[0]][coord[1]] = 1; // making the move
 
       setMatrixValues(matrix); // updating matrix
+      playerTurn = false;
 
-      computerAI.update(matrix);
-      computerAI.makeNextMove();
-      matrix = computerAI.getMatrix();
+      // waiting .5 seconds for computer to make its move
+      setTimeout(function () {
 
-      setMatrixValues(matrix); // updating matrix
+        computerAI.update(matrix);
+        computerAI.makeNextMove();
+        matrix = computerAI.getMatrix();
+
+        setMatrixValues(matrix); // updating matrix
+
+        computerAI.update(matrix); // updating before getting rows, because the setMatrixValues does not update diagonals or columns
+        allRows = computerAI.getAllRows();
+
+        setTimeout(function () {
+          checkForWins(allRows);
+        }, 100);
+
+        playerTurn = true;
+
+
+      }, 500);
   }
 });

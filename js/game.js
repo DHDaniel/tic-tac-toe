@@ -204,4 +204,12 @@ function TicTacToeAI(board) {
   this.getMatrix = function () {
     return this.matrix;
   }
+
+  this.getAllRows = function () {
+    return {
+      "rows" : this.matrix,
+      "columns" : this.columns,
+      "diagonals" : this.diagonals
+    }
+  }
 }
