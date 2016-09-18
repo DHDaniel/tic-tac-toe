@@ -99,8 +99,7 @@ function checkForWins(rows) {
   var allFull = true;
   for (var i = 0; i < rows.rows.length; i++) {
      if (checkRow(rows.rows[i])) {
-        alert('win');
-        return true;
+        return rows.rows[i][0];
      }
 
      if (rows.rows[i].indexOf(null) > -1) {
@@ -110,20 +109,18 @@ function checkForWins(rows) {
    // columns
   for (var i = 0; i < rows.columns.length; i++) {
     if (checkRow(rows.columns[i])) {
-      alert('win');
-      return true;
+      return rows.columns[i][0];
     }
   }
   // diagonals
   for (var i = 0; i < rows.diagonals.length; i++) {
     if (checkRow(rows.diagonals[i])) {
-      alert('win');
-      return true;
+      return rows.diagonals[i][0];
     }
   }
 
   if (allFull) {
-    alert("Tie game");
+    return true;
   }
   return false; // if no wins
 }
@@ -153,7 +150,20 @@ $("#tic-tac-toe-table td").click(function () {
         allRows = computerAI.getAllRows();
 
         setTimeout(function () {
-          checkForWins(allRows);
+          var outcome = checkForWins(allRows);
+
+          switch (outcome) {
+            case 1:
+              alert("Player wins!");
+              break;
+            case 0:
+              alert("Computer wins!");
+              break;
+            case true:
+              alert("Tie game");
+              break;
+          }
+
         }, 100);
 
         playerTurn = true;
