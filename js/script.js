@@ -81,6 +81,14 @@ function getBoxCoordinate($box, matrix) {
   return null;
 }
 
+function resetMatrix() {
+  return [[null, null, null], [null, null, null], [null, null, null]];
+}
+
+function resetGame() {
+  matrix = resetMatrix();
+  setMatrixValues(matrix);
+}
 
   // checks if all elements in an array are the same
   function checkRow(row) {
@@ -155,12 +163,15 @@ $("#tic-tac-toe-table td").click(function () {
           switch (outcome) {
             case 1:
               alert("Player wins!");
+              resetGame();
               break;
             case 0:
               alert("Computer wins!");
+              resetGame();
               break;
             case true:
               alert("Tie game");
+              resetGame();
               break;
           }
 
