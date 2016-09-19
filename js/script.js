@@ -4,32 +4,53 @@ var $ticBoard = $("#tic-tac-toe-table");
 var matrix = getMatrixValues();
 
 var playerTurn = true;
-var xStyle = "red";
-var oStyle = "blue";
+var xStyle = "X";
+var oStyle = "O";
+
+var xColor = "#FF9B28";
+var oColor = "#FF4242";
 
 var $playerCounter = $("#results #player .count");
 var $computerCounter = $("#results #computer .count");
 var $tieCounter = $("#results #ties .count");
 
+var $results = $("#results");
+
 var playerStyle = xStyle;
 var computerStyle = oStyle;
+
+var playerColor = xColor;
+var computerColor = oColor;
 
 // initializing AI and getting all rows from its helper
 var computerAI = new TicTacToeAI(matrix);
 
 var allRows = computerAI.getAllRows();
 
+function displayResult(result) {
+  var scoring = $results.html();
+  $results.children().fadeOut(100);
+
+  $results.html(result).fadeIn(100);
+
+  setTimeout(function () {
+    $results.html(scoring).fadeIn(100);
+  }, 2000);
+}
+
 // Determines the styling to use for each box in tic tac toe board
 function addStyling($box, value) {
   switch (value) {
     case null:
-      $box.css("background-color", "transparent");
+      $box.html("");
       break;
     case 0:
-      $box.css("background-color", computerStyle);
+      $box.html(computerStyle);
+      $box.css("color", computerColor);
       break;
     case 1:
-      $box.css("background-color", playerStyle);
+      $box.html(playerStyle);
+      $box.css("color", playerColor);
       break;
   }
 }
@@ -143,20 +164,19 @@ function checkForWins(rows) {
 function resolveGame(outcome) {
   switch (outcome) {
     case 1:
-      alert("Player wins!");
-      $playerCounter.html( parseInt($playerCounter.html()) + 1);
+      $("#results #player .count").html( parseInt($("#results #player .count").html()) + 1);
+      displayResult("Player wins!");
       resetGame();
       return true;
     case 0:
-      alert("Computer wins!");
-      $computerCounter.html( parseInt($computerCounter.html()) + 1);
+      $("#results #computer .count").html( parseInt($("#results #computer .count").html()) + 1);
+      displayResult("Computer wins!");
       resetGame();
       return true;
     case true:
-      alert("Tie game");
-      $tieCounter.html( parseInt($tieCounter.html()) + 1);
+      $("#results #ties .count").html( parseInt($("#results #ties .count").html()) + 1);
+      displayResult("Tie game!");
       resetGame();
-      console.log("reset");
       return true;;
   }
 
@@ -168,15 +188,27 @@ function resolveGame(outcome) {
 $("#x").click(function () {
   playerStyle = xStyle;
   computerStyle = oStyle;
+  playerColor = xColor;
+  computerColor = oColor;
   resetGame();
   playerTurn = true;
+
+  // applying proper styling
+  $("#choose").children().removeClass("selected");
+  $(this).addClass("selected");
 });
 
 $("#o").click(function () {
   playerStyle = oStyle;
   computerStyle = xStyle;
+  playerColor = oColor;
+  computerColor = xColor;
   resetGame();
   playerTurn = true;
+
+  // applying proper styling
+  $("#choose").children().removeClass("selected");
+  $(this).addClass("selected");
 });
 
 

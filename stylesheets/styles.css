@@ -1,71 +1,89 @@
-/* line 4, ../sass/styles.scss */
+/* line 7, ../sass/styles.scss */
 body, html {
   width: 100%;
   background-color: #333;
 }
 
-/* line 9, ../sass/styles.scss */
+/* line 12, ../sass/styles.scss */
 #tic-tac-toe-table {
   margin: 0 auto;
   border: none;
-}
-/* line 13, ../sass/styles.scss */
-#tic-tac-toe-table td {
-  height: 60px;
-  width: 60px;
-  border: 1px solid white;
+  width: 90vw;
+  height: 90vw;
+  max-width: 400px;
+  max-height: 400px;
 }
 /* line 20, ../sass/styles.scss */
+#tic-tac-toe-table td {
+  height: 33.3%;
+  max-height: 132px;
+  width: 33.3%;
+  max-width: 132px;
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  font-size: 44px;
+  transition: all 0.2s ease-in-out;
+}
+/* line 38, ../sass/styles.scss */
 #tic-tac-toe-table td:first-child {
   border-left: none;
 }
-/* line 25, ../sass/styles.scss */
+/* line 43, ../sass/styles.scss */
 #tic-tac-toe-table td:last-child {
   border-right: none;
 }
-/* line 30, ../sass/styles.scss */
+/* line 48, ../sass/styles.scss */
 #tic-tac-toe-table tr:first-of-type td {
   border-top: none;
 }
-/* line 36, ../sass/styles.scss */
+/* line 54, ../sass/styles.scss */
 #tic-tac-toe-table tr:last-of-type td {
   border-bottom: none;
 }
 
-/* line 42, ../sass/styles.scss */
+/* line 60, ../sass/styles.scss */
 #choose {
   display: block;
   text-align: center;
   margin: 0 auto;
-  padding: 80px 0px 20px 0px;
+  padding: 30px 0px 20px 0px;
 }
-/* line 49, ../sass/styles.scss */
+/* line 67, ../sass/styles.scss */
 #choose button {
   background: transparent;
   font-size: 20px;
-  border: none;
+  border-color: transparent;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: all 0.3s ease-in-out;
   color: white;
   padding: 20px;
 }
-/* line 57, ../sass/styles.scss */
+/* line 79, ../sass/styles.scss */
 #choose button:hover {
   border: 1px solid white;
 }
-/* line 61, ../sass/styles.scss */
+/* line 83, ../sass/styles.scss */
 #choose button:focus {
   outline: none;
 }
-
-/* line 67, ../sass/styles.scss */
-#results {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 30px;
+/* line 87, ../sass/styles.scss */
+#choose button.selected {
+  background-color: #52C450;
 }
-/* line 73, ../sass/styles.scss */
-#results p {
-  display: inline-block;
+
+/* line 93, ../sass/styles.scss */
+#results {
+  text-align: center;
+  margin: 5px 0px 30px 0px;
+  height: 80px;
   color: white;
-  margin: 0px 50px;
+  font-size: 30px;
+}
+/* line 101, ../sass/styles.scss */
+#results p {
+  font-size: 16px;
+  color: white;
 }
