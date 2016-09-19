@@ -7,11 +7,13 @@ $boardWidth : 100vw - 10vw;
 body, html {
   width: 100%;
   background-color: $backgroundColor;
+  font-family: sans-serif;
 }
 
 #tic-tac-toe-table {
   margin: 0 auto;
   border: none;
+  border-spacing: 0;
   width: $boardWidth;
   height: $boardWidth;
   max-width: 400px;

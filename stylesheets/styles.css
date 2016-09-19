@@ -2,18 +2,20 @@
 body, html {
   width: 100%;
   background-color: #333;
+  font-family: sans-serif;
 }
 
-/* line 12, ../sass/styles.scss */
+/* line 13, ../sass/styles.scss */
 #tic-tac-toe-table {
   margin: 0 auto;
   border: none;
+  border-spacing: 0;
   width: 90vw;
   height: 90vw;
   max-width: 400px;
   max-height: 400px;
 }
-/* line 20, ../sass/styles.scss */
+/* line 22, ../sass/styles.scss */
 #tic-tac-toe-table td {
   height: 33.3%;
   max-height: 132px;
@@ -26,31 +28,31 @@ body, html {
   font-size: 44px;
   transition: all 0.2s ease-in-out;
 }
-/* line 38, ../sass/styles.scss */
+/* line 40, ../sass/styles.scss */
 #tic-tac-toe-table td:first-child {
   border-left: none;
 }
-/* line 43, ../sass/styles.scss */
+/* line 45, ../sass/styles.scss */
 #tic-tac-toe-table td:last-child {
   border-right: none;
 }
-/* line 48, ../sass/styles.scss */
+/* line 50, ../sass/styles.scss */
 #tic-tac-toe-table tr:first-of-type td {
   border-top: none;
 }
-/* line 54, ../sass/styles.scss */
+/* line 56, ../sass/styles.scss */
 #tic-tac-toe-table tr:last-of-type td {
   border-bottom: none;
 }
 
-/* line 60, ../sass/styles.scss */
+/* line 62, ../sass/styles.scss */
 #choose {
   display: block;
   text-align: center;
   margin: 0 auto;
   padding: 30px 0px 20px 0px;
 }
-/* line 67, ../sass/styles.scss */
+/* line 69, ../sass/styles.scss */
 #choose button {
   background: transparent;
   font-size: 20px;
@@ -61,20 +63,20 @@ body, html {
   color: white;
   padding: 20px;
 }
-/* line 79, ../sass/styles.scss */
+/* line 81, ../sass/styles.scss */
 #choose button:hover {
   border: 1px solid white;
 }
-/* line 83, ../sass/styles.scss */
+/* line 85, ../sass/styles.scss */
 #choose button:focus {
   outline: none;
 }
-/* line 87, ../sass/styles.scss */
+/* line 89, ../sass/styles.scss */
 #choose button.selected {
   background-color: #52C450;
 }
 
-/* line 93, ../sass/styles.scss */
+/* line 95, ../sass/styles.scss */
 #results {
   text-align: center;
   margin: 5px 0px 30px 0px;
@@ -82,7 +84,7 @@ body, html {
   color: white;
   font-size: 30px;
 }
-/* line 101, ../sass/styles.scss */
+/* line 103, ../sass/styles.scss */
 #results p {
   font-size: 16px;
   color: white;
